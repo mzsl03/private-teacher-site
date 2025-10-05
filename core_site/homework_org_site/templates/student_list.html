@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/student_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="list_students">
+        <h3>Students</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>School year</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+                <td>{{ student.user.username }}</td>
+                <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                <td>{{ student.user.email }}</td>
+                <td>{{ student.school_year }}</td>
+            {% endfor %}
+
+        </table>
+        <button type="button" class="btn btn-primary"><a href={% url 'add_student' %}>Add new Student</a></button>
+    </div>
+{% endblock %}
