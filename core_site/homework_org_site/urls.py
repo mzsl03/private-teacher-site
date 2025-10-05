@@ -17,9 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-
+from django.contrib.auth import views as auth_views
 from homework_org_site import views
 
 urlpatterns = [
+    path('', views.login, name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('home/', views.index, name='home'),
+    path('students/', views.student_list, name='student_list'),
 ]
