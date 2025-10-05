@@ -11,7 +11,26 @@
 </head>
 <body>
 <header>
+    <div class="container">
+        <nav class="nav-bar">
+            <ul class="nav-content">
 
+                {% if request.user.is_authenticated %}
+                    <li class="home-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    {% if request.user.is_superuser %}
+                        <li class="item"><a href="{% url 'student_list' %}">Students</a></li>
+                    {% else %}
+                        <li class="item"><a href="{% url 'my_homework' %}">Homeworks</a></li>
+                        <li class="item"><a href="{% url 'my_lessons' %}">Subjects</a></li>
+                    {% endif %}
+                    <li class="logout-item"><form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class='btn' type="submit">Logout</button>
+                    </form> </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 </header>
 <main>
     {% block content %}{% endblock %}
