@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="calendar">
+        <div class="cal-header">
+            <a class="cal-nav" href="{% url 'calendar_month' prev_year prev_month %}">«</a>
+            <h3>{{ month }}. {{ year }}</h3>
+            <a class="cal-nav" href="{% url 'calendar_month' next_year next_month %}">»</a>
+            <a class="cal-today" href="{% url 'calendar_month_today' %}">Today</a>
+        </div>
+
+        <table class="cal-table">
+            <thead>
+            <tr>
+                <th>H</th>
+                <th>K</th>
+                <th>Sze</th>
+                <th>Cs</th>
+                <th>P</th>
+                <th>Szo</th>
+                <th>V</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for week in weeks %}
+                <tr>
+                    {% for d in week %}
+                        <td class="cal-cell" id="{% if d.is_other %} cal-other{% endif %}{% if d.is_today %} cal-today-cell{% endif %}">
+                            <div class="cal-date">{{ d.date.day }}</div>
+                            {% for l in d.lessons %}
+                                <div class="cal-event">
+                                    <span class="cal-event-title">{{ l.subject.name }}</span>
+                                    <span class="cal-event-sub">
+                                        {% if request.user.teacher %}
+                                            {{ l.student.user.get_full_name|default:l.student.user.username }}
+                                        {% else %}
+                                            {{ l.teacher.user.get_full_name|default:l.teacher.user.username }}
+                                        {% endif %}
+                                        {{ l.duration }} perc
+                                    </span>
+                                </div>
+                            {% empty %}
+
+                            {% endfor %}
+
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if request.user.teacher %}
+            <a href="{% url 'add_lesson' %}">
+                <button class="btn">Add lesson</button>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
