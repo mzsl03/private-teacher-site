@@ -27,4 +27,6 @@ urlpatterns = [
     path('students/', views.student_list, name='student_list'),
     path('add_student/', views.add_student, name='add_student'),
     path('add_lesson/', views.add_lesson, name='add_lesson'),
+    path('calendar/', views.calendar_month, name='calendar_month_today'),
+    path('calendar/<int:year>/<int:month>/', views.calendar_month, name='calendar_month'),
 ]
