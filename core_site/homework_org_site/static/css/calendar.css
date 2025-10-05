@@ -1,0 +1,135 @@
+.calendar {
+    background: var(--panel, #ffffff);
+    border: 1px solid var(--border, #d5d9df);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .75rem;
+}
+
+.cal-header h3 {
+    margin: 0 .5rem;
+    color: var(--text, #2d2f33);
+    font-weight: 700;
+}
+
+.cal-nav,
+.cal-today {
+    text-decoration: none;
+    border-radius: 8px;
+    padding: .35rem .7rem;
+    font-weight: 600;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s ease, transform .1s ease;
+    color: #fff;
+}
+
+.cal-nav {
+    background: var(--brand, #4c7edc);
+}
+
+.cal-nav:hover {
+    background: var(--brand-hover, #3b6bc0);
+    transform: translateY(-1px);
+}
+
+.cal-today {
+    background: var(--accent, #7dcfb6);
+}
+
+.cal-today:hover {
+    filter: brightness(0.94);
+    transform: translateY(-1px);
+}
+
+.cal-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.cal-table th {
+    background: var(--brand, #4c7edc);
+    color: #fff;
+    font-weight: 700;
+    padding: .55rem;
+    font-size: .95rem;
+}
+
+.cal-cell {
+    border: 1px solid var(--border, #d5d9df);
+    vertical-align: top;
+    height: 9rem;
+    padding: .45rem;
+    position: relative;
+    background: var(--panel, #fff);
+}
+
+#cal-other {
+    background: #f6f8fb;
+    color: var(--muted, #6c737f);
+}
+
+#cal-today-cell {
+    outline: 2px solid var(--brand, #4c7edc);
+    background: #eef5ff;
+}
+
+.cal-date {
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--muted, #6c737f);
+    margin-bottom: .35rem;
+}
+
+.cal-event {
+    display: block;
+    text-decoration: none;
+    background: rgba(76, 126, 220, .10);
+    border: 1px solid rgba(76, 126, 220, .25);
+    color: var(--text, #2d2f33);
+    border-radius: 8px;
+    padding: .4rem .5rem;
+    margin-bottom: .35rem;
+    transition: background .15s ease, border-color .15s ease;
+    overflow: hidden;
+}
+
+.cal-event:hover {
+    background: rgba(76, 126, 220, .18);
+    border-color: rgba(76, 126, 220, .4);
+}
+
+.cal-event-title {
+    font-weight: 700;
+    font-size: .9rem;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cal-event-sub {
+    font-size: .8rem;
+    color: var(--muted, #6c737f);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn a {
+    text-decoration: none;
+    color: #fff;
+}
