@@ -20,10 +20,12 @@
             </thead>
             <tbody>
             {% for student in students %}
-                <td>{{ student.user.username }}</td>
-                <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
-                <td>{{ student.user.email }}</td>
-                <td>{{ student.school_year }}</td>
+                <tr>
+                    <td>{{ student.user.username }}</td>
+                    <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                    <td>{{ student.user.email }}</td>
+                    <td>{{ student.school_year }}</td>
+                </tr>
             {% endfor %}
 
         </table>
