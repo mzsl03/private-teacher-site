@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
+from homework_org_site.forms.lesson_add_form import LessonAddForm
 from homework_org_site.forms.student_add_form import StudentForm
 from homework_org_site.models import Student
 
@@ -55,3 +56,18 @@ def add_student(request):
         form = StudentForm()
 
     return render(request, "add_student.html", {'form': form})
+
+@login_required(login_url='/')
+def add_lesson(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    if request.method == "POST":
+        form = LessonAddForm(request.POST, user=request.user)
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            lesson.teacher = request.user.teacher
+            lesson.save()
+            return redirect("add_lesson")
+    else:
+        form = LessonAddForm(user=request.user)
+    return render(request, "add_lesson.html", {"form": form})
