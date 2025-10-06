@@ -32,19 +32,6 @@ class StudentForm(forms.Form):
         max_length=255,
         label="Last Name"
     )
-    address = forms.CharField(
-        max_length=255,
-        label="Address"
-    )
-    birth_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        label="Date of Birth"
-    )
-    phone_number = forms.CharField(
-        max_length=12,
-        label="Phone number",
-        error_messages={"invalid": "Invalid phone number!"}
-    )
     school_year = forms.IntegerField(
         min_value=1,
         max_value=12,
