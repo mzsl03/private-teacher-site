@@ -175,9 +175,18 @@ def update_status(request):
             return JsonResponse({"success": False, "error": "Homework not found"})
     return JsonResponse({"success": False, "error": "Invalid request"})
 
+@login_required(login_url='/')
 @csrf_exempt
 def delete_done_homeworks(request):
     if request.method == "POST":
         deleted_count, _ = Homework.objects.filter(status="DONE").delete()
         return JsonResponse({"success": True, "deleted": deleted_count})
     return JsonResponse({"success": False, "error": "Invalid request"})
+
+@login_required(login_url='/')
+def delete_student(request, pk):
+    if request.method == "POST":
+        student = get_object_or_404(Student, pk=pk)
+        student.delete()
+        return redirect("student_list")
+    return redirect("student_list")
