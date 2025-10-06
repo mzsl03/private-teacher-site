@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
+
 from homework_org_site import views
 
 urlpatterns = [
@@ -29,4 +30,6 @@ urlpatterns = [
     path('add_lesson/', views.add_lesson, name='add_lesson'),
     path('calendar/', views.calendar_month, name='calendar_month_today'),
     path('calendar/<int:year>/<int:month>/', views.calendar_month, name='calendar_month'),
+    path('kanban/<int:student_id>/', views.kanban_board, name='kanban'),
+    path('add_homework/', views.add_homework, name='add_homework'),
 ]

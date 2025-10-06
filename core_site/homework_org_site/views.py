@@ -2,16 +2,17 @@ import calendar
 from collections import defaultdict
 from datetime import date
 from django.utils import timezone
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
+from homework_org_site.forms.homework_add_form import HomeworkForm
 from homework_org_site.forms.lesson_add_form import LessonAddForm
 from homework_org_site.forms.student_add_form import StudentForm
-from homework_org_site.models import Student, Lesson
+from homework_org_site.models import Student, Lesson, Homework
 
 
 @login_required(login_url='/')
@@ -118,3 +119,42 @@ def calendar_month(request, year=None, month=None):
         "prev_year": prev_year, "prev_month": prev_month,
         "next_year": next_year, "next_month": next_month,
     })
+
+login_required(login_url='/')
+def kanban_board(request, student_id):
+    user = request.user
+    if hasattr(user, "teacher"):
+        student = get_object_or_404(Student, id=student_id)
+    elif hasattr(user, "student"):
+        if user.student.id != student_id:
+            return redirect('home')
+        student = user.student
+    todos = Homework.objects.filter(student=student, status="TODO")
+    in_progress = Homework.objects.filter(student=student, status="IN_PROGRESS")
+    done = Homework.objects.filter(student=student, status="DONE")
+    return render(request, 'kanban.html',
+                  {
+                      'student': student,
+                      'todos': todos,
+                      'in_progress': in_progress,
+                      'done': done,
+                  }
+                  )
+
+login_required(login_url='/')
+def add_homework(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    if request.method == "POST":
+        form = HomeworkForm(request.POST)
+        if form.is_valid():
+            homework = form.save(commit=False)
+            if hasattr(request.user, "teacher"):
+                homework.teacher = request.user.teacher
+            homework.save()
+            print(form.cleaned_data.get("student"))
+            return redirect("kanban", student_id=homework.student.id)
+        else:
+            print(form.errors)
+        form = HomeworkForm()
+    return render(request, "add_homework.html", {'form': form})
