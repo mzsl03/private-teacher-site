@@ -33,4 +33,5 @@ urlpatterns = [
     path('kanban/<int:student_id>/', views.kanban_board, name='kanban'),
     path('add_homework/', views.add_homework, name='add_homework'),
     path('update_status/', views.update_status, name='update_homework_status'),
+    path('delete_done/', views.delete_done_homeworks, name='delete_done_homeworks'),
 ]

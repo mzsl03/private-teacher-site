@@ -174,3 +174,10 @@ def update_status(request):
         except Homework.DoesNotExist:
             return JsonResponse({"success": False, "error": "Homework not found"})
     return JsonResponse({"success": False, "error": "Invalid request"})
+
+@csrf_exempt
+def delete_done_homeworks(request):
+    if request.method == "POST":
+        deleted_count, _ = Homework.objects.filter(status="DONE").delete()
+        return JsonResponse({"success": True, "deleted": deleted_count})
+    return JsonResponse({"success": False, "error": "Invalid request"})
