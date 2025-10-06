@@ -58,6 +58,11 @@ class Lesson(models.Model):
     def __str__(self):
         return self.subject.name + ' ' + self.teacher.user.username
 
+class HomeworkStatus(models.TextChoices):
+    TODO = "TODO"
+    IN_PROGRESS = "IN_PROGRESS"
+    DONE = "DONE"
+
 class Homework(models.Model):
     student = models.ForeignKey(
         'Student',
@@ -69,9 +74,12 @@ class Homework(models.Model):
             on_delete=models.CASCADE,
             related_name='homeworks'
     )
+    status = models.CharField(
+        max_length=200,
+        choices=HomeworkStatus.choices,
+        default=HomeworkStatus.TODO,
+        blank=True
+    )
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     due_date = models.DateField()
-    is_completed = models.BooleanField(default=False)
-
-
