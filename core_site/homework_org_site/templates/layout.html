@@ -7,6 +7,7 @@
         Math and IT for fun
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -22,10 +23,12 @@
                     {% else %}
                     {% endif %}
                     <li class="item"><a href="{% url 'calendar_month_today' %}">Calendar</a></li>
-                    <li class="logout-item"><form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button class='btn' type="submit">Logout</button>
-                    </form> </li>
+                    <li class="logout-item">
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class='btn' type="submit">Logout</button>
+                        </form>
+                    </li>
                 {% endif %}
             </ul>
         </nav>
