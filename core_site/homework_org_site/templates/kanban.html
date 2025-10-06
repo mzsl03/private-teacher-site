@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="kanban-container">
+        <div class="column">
+            <h4>Todo</h4>
+            {% for hw in todos %}
+                <div class="card">
+                    <strong>{{ hw.title }}</strong><br>
+                    <small>Due date: {{ hw.due_date }}</small>
+                </div>
+            {% empty %}
+                <p>Nothing to do...</p>
+            {% endfor %}
+        </div>
+
+        <div class="column">
+            <h4>In progress</h4>
+            {% for hw in in_progress %}
+                <div class="card bg-warning">
+                    <strong>{{ hw.title }}</strong>
+                    <small>Due date: {{ hw.due_date }}</small>
+                </div>
+            {% empty %}
+                <p>No homework in progress...</p>
+            {% endfor %}
+        </div>
+
+        <div class="column">
+            <h4>Done</h4>
+            {% for hw in done %}
+                <div class="card bg-success">
+                    <strong>{{ hw.title }}</strong>
+                    <small>Due date: {{ hw.due_date }}</small>
+                </div>
+            {% empty %}
+                <p>No homework done...</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
