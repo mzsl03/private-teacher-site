@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect
 from homework_org_site.forms.homework_add_form import HomeworkForm
 from homework_org_site.forms.lesson_add_form import LessonAddForm
 from homework_org_site.forms.student_add_form import StudentForm
+from homework_org_site.forms.student_update_form import StudentUpdateForm
 from homework_org_site.models import Student, Lesson, Homework
 
 
@@ -190,3 +191,33 @@ def delete_student(request, pk):
         student.delete()
         return redirect("student_list")
     return redirect("student_list")
+
+@login_required(login_url='/')
+def edit_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    user = student.user
+
+    if request.method == "POST":
+        form = StudentUpdateForm(request.POST, user_instance=user)
+        if form.is_valid():
+            user.username = form.cleaned_data["username"]
+            user.email = form.cleaned_data["email"]
+            user.first_name = form.cleaned_data["first_name"]
+            user.last_name = form.cleaned_data["last_name"]
+            user.save()
+            student.school_year = form.cleaned_data["school_year"]
+            student.notes = form.cleaned_data["notes"]
+            student.save()
+
+            return redirect("student_list")
+    else:
+        form = StudentUpdateForm(initial={
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "school_year": student.school_year,
+            "notes": student.notes,
+        }, user_instance=user)
+
+    return render(request, "edit_student.html", {"form": form, "student": student})
