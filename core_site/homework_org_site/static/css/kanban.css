@@ -3,8 +3,9 @@
     justify-content: space-around;
     gap: 20px;
     margin: 20px;
-  }
-  .column {
+}
+
+.column {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -13,12 +14,22 @@
     min-height: 400px;
     width: 200px;
     pointer-events: auto;
-  }
-  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.card {
     background: #fafafa;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
     cursor: grab;
-  }
+}
+
+.btn {
+    margin-top: auto;
+    align-self: center;
+}
