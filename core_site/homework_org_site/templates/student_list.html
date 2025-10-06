@@ -16,6 +16,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>School year</th>
+                <th>Homework</th>
             </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                     <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
                     <td>{{ student.user.email }}</td>
                     <td>{{ student.school_year }}</td>
+                    <td><a href="{% url 'kanban' student.user.id %}" class="btn btn-secondary">Homework</a></td>
                 </tr>
             {% endfor %}
 
