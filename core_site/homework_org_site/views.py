@@ -147,6 +147,7 @@ login_required(login_url='/')
 def add_homework(request):
     if not request.user.is_superuser:
         return redirect('home')
+    form = HomeworkForm()
     if request.method == "POST":
         form = HomeworkForm(request.POST)
         if form.is_valid():
@@ -156,8 +157,6 @@ def add_homework(request):
             homework.save()
             print(form.cleaned_data.get("student"))
             return redirect("kanban", student_id=homework.student.id)
-        else:
-            print(form.errors)
         form = HomeworkForm()
     return render(request, "add_homework.html", {'form': form})
 
