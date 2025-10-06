@@ -20,6 +20,7 @@
                     <li class="home-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     {% if request.user.is_superuser %}
                         <li class="item"><a href="{% url 'student_list' %}">Students</a></li>
+                        <li class="item"><a href="{% url 'add_homework' %}">New homework</a></li>
                     {% else %}
                     {% endif %}
                     <li class="item"><a href="{% url 'calendar_month_today' %}">Calendar</a></li>
