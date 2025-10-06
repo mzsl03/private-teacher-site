@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="add-homework-div">
+        <div class="add-homework-container">
+            <form method="POST">
+                <h3 class="add-homework-title">Create homework</h3>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    {{ form.subject }}
+                </div>
+                <div class="form-group">
+                    <label for="student">Student</label>
+                    {{ form.student }}
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="due_date">Due date</label>
+                    {{ form.due_date }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
