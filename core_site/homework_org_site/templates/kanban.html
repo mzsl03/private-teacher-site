@@ -3,15 +3,16 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/kanban.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="kanban-container">
-        <div class="column">
+    <div id="kanban-container" class="kanban-container" data-update-url="{% url 'update_homework_status' %}"
+         data-csrf-token="{{ csrf_token }}">
+        <div class="column" data-status="TODO">
             <h4>Todo</h4>
             {% for hw in todos %}
-                <div class="card">
+                <div class="card" draggable="true" data-id="{{ hw.id }}">
                     <strong>{{ hw.title }}</strong><br>
                     <small>Due date: {{ hw.due_date }}</small>
                 </div>
@@ -20,10 +21,10 @@
             {% endfor %}
         </div>
 
-        <div class="column">
+        <div class="column" data-status="IN_PROGRESS">
             <h4>In progress</h4>
             {% for hw in in_progress %}
-                <div class="card bg-warning">
+                <div class="card bg-warning" draggable="true" data-id="{{ hw.id }}">
                     <strong>{{ hw.title }}</strong>
                     <small>Due date: {{ hw.due_date }}</small>
                 </div>
@@ -32,10 +33,10 @@
             {% endfor %}
         </div>
 
-        <div class="column">
+        <div class="column" data-status="DONE">
             <h4>Done</h4>
             {% for hw in done %}
-                <div class="card bg-success">
+                <div class="card bg-success" draggable="true" data-id="{{ hw.id }}">
                     <strong>{{ hw.title }}</strong>
                     <small>Due date: {{ hw.due_date }}</small>
                 </div>
@@ -44,4 +45,5 @@
             {% endfor %}
         </div>
     </div>
+    <script src="{% static 'js/kanban_drag.js' %}"></script>
 {% endblock %}

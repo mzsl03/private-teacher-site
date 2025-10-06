@@ -1,8 +1,10 @@
 import calendar
+import json
 from collections import defaultdict
-from datetime import date
 from django.utils import timezone
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -158,3 +160,18 @@ def add_homework(request):
             print(form.errors)
         form = HomeworkForm()
     return render(request, "add_homework.html", {'form': form})
+
+@csrf_exempt
+def update_status(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        hw_id = data.get("id")
+        status = data.get("status")
+        try:
+            hw = Homework.objects.get(id=hw_id)
+            hw.status = status
+            hw.save()
+            return JsonResponse({"success": True})
+        except Homework.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Homework not found"})
+    return JsonResponse({"success": False, "error": "Invalid request"})
