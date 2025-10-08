@@ -49,11 +49,13 @@
                             {% empty %}
                             {% endfor %}
                             {% for h in d.homeworks %}
-                                <div class="cal-event cal-homework">
-                                <span class="cal-event-title">
-                                    HW: {{ h.title }}
-                                </span>
-                                </div>
+                                <a href="{% url 'edit_homework' h.id %}">
+                                    <div class="cal-event cal-homework">
+                                        <span class="cal-event-title">
+                                            HW: {{ h.title }}
+                                        </span>
+                                    </div>
+                                </a>
                             {% endfor %}
                         </td>
                     {% endfor %}
