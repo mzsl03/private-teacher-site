@@ -49,13 +49,13 @@
                             {% empty %}
                             {% endfor %}
                             {% for h in d.homeworks %}
-                                <a href="{% url 'edit_homework' h.id %}">
-                                    <div class="cal-event cal-homework">
+                                {% if user.is_superuser %}<a href="{% url 'edit_homework' h.id %}">{% endif %}
+                            <div class="cal-event cal-homework">
                                         <span class="cal-event-title">
                                             HW: {{ h.title }}
                                         </span>
-                                    </div>
-                                </a>
+                            </div>
+                            {% if user.is_superuser %}</a>{% endif %}
                             {% endfor %}
                         </td>
                     {% endfor %}
