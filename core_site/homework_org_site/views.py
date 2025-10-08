@@ -132,6 +132,7 @@ def calendar_month(request, year=None, month=None):
         "weeks": weeks,
         "prev_year": prev_year, "prev_month": prev_month,
         "next_year": next_year, "next_month": next_month,
+        "user": request.user,
     })
 
 login_required(login_url='/')
