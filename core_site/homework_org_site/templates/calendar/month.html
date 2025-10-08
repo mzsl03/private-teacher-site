@@ -31,7 +31,8 @@
             {% for week in weeks %}
                 <tr>
                     {% for d in week %}
-                        <td class="cal-cell" id="{% if d.is_other %} cal-other{% endif %}{% if d.is_today %} cal-today-cell{% endif %}">
+                        <td class="cal-cell"
+                            id="{% if d.is_other %} cal-other{% endif %}{% if d.is_today %} cal-today-cell{% endif %}">
                             <div class="cal-date">{{ d.date.day }}</div>
                             {% for l in d.lessons %}
                                 <div class="cal-event">
@@ -42,13 +43,18 @@
                                         {% else %}
                                             {{ l.teacher.user.get_full_name|default:l.teacher.user.username }}
                                         {% endif %}
-                                        {{ l.duration }} perc
+                                        {{ l.duration }} minutes
                                     </span>
                                 </div>
                             {% empty %}
-
                             {% endfor %}
-
+                            {% for h in d.homeworks %}
+                                <div class="cal-event cal-homework">
+                                <span class="cal-event-title">
+                                    HW: {{ h.title }}
+                                </span>
+                                </div>
+                            {% endfor %}
                         </td>
                     {% endfor %}
                 </tr>

@@ -96,21 +96,31 @@ def calendar_month(request, year=None, month=None):
     qs = (Lesson.objects
           .filter(date__range=(start, end))
           .select_related("student__user", "teacher__user", "subject"))
+    qsh = (Homework.objects
+           .filter(due_date__range=(start, end))
+           .select_related("student__user", "subject"))
 
     if hasattr(request.user, "teacher"):
         qs = qs.filter(teacher=request.user.teacher)
     elif hasattr(request.user, "student"):
         qs = qs.filter(student=request.user.student)
+        qsh = qsh.filter(student=request.user.student)
 
-    by_day = defaultdict(list)
+    by_day = defaultdict(lambda: {"lessons": [], "homeworks": []})
+
     for l in qs:
-        by_day[l.date].append(l)
+        by_day[l.date]["lessons"].append(l)
+
+    for h in qsh:
+        by_day[h.due_date]["homeworks"].append(h)
 
     weeks = []
     for week in raw_weeks:
         days = []
         for d in week:
-            days.append({"date": d, "lessons": by_day.get(d, [])})
+            days.append({"date": d,
+                         "lessons": by_day[d]["lessons"],
+                         "homeworks": by_day[d]["homeworks"]})
         weeks.append(days)
 
     prev_year, prev_month = (year - 1, 12) if month == 1 else (year, month - 1)
