@@ -128,7 +128,7 @@ def kanban_board(request, student_id):
     user = request.user
     if hasattr(user, "teacher"):
         student = get_object_or_404(Student, id=student_id)
-    elif hasattr(user, "student"):
+    else:
         if user.student.id != student_id:
             return redirect('home')
         student = user.student
@@ -188,7 +188,8 @@ def delete_done_homeworks(request):
 def delete_student(request, pk):
     if request.method == "POST":
         student = get_object_or_404(Student, pk=pk)
-        student.delete()
+        user = student.user
+        user.delete()
         return redirect("student_list")
     return redirect("student_list")
 
