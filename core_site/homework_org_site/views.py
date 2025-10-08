@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from homework_org_site.forms.homework_add_form import HomeworkForm
+from homework_org_site.forms.homework_update_form import HomeworkUpdateForm
 from homework_org_site.forms.lesson_add_form import LessonAddForm
 from homework_org_site.forms.student_add_form import StudentForm
 from homework_org_site.forms.student_update_form import StudentUpdateForm
@@ -232,3 +233,17 @@ def edit_student(request, pk):
         }, user_instance=user)
 
     return render(request, "edit_student.html", {"form": form, "student": student})
+
+@login_required(login_url='/')
+def edit_homework(request, pk):
+    homework = get_object_or_404(Homework, pk=pk)
+
+    if request.method == "POST":
+        form = HomeworkUpdateForm(request.POST, instance=homework)
+        if form.is_valid():
+            form.save()
+            return redirect("kanban", student_id=homework.student.id)
+    else:
+        form = HomeworkUpdateForm(instance=homework)
+
+    return render(request, "edit_homework.html", {"form": form, "homework": homework})
