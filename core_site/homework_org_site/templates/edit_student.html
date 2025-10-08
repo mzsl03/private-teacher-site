@@ -36,6 +36,9 @@
                     <label for="notes">Thoughts on the student</label>
                     {{ form.notes }}
                 </div>
+                <a href="{% url 'student_list' %}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </a>
             </form>
             <a href="{% url 'student_list' %}">
                 <button class="btn">Cancel</button>
