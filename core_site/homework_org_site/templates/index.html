@@ -1,1 +1,27 @@
 {% extends 'layout.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="news-container">
+        <h2 class="news-title">Latest IT & Math News</h2>
+
+        <div class="news-grid">
+            {% for title, link, content in news %}
+                <div class="news-card">
+                    <h3 class="news-item-title">{{ title }}</h3>
+                    <p class="news-item-summary">{{ content|truncatewords:30 }}</p>
+                    <a href="{{ link }}" class="news-item-link" target="_blank"><button class="btn">Read more</button></a>
+                </div>
+            {% empty %}
+                <p class="no-news">No news available right now.</p>
+            {% endfor %}
+            <div class="news-source">
+                <small>Source: The Verge</small>
+            </div>
+        </div>
+    </div>
+{% endblock %}
