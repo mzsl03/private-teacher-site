@@ -41,9 +41,11 @@
             {% empty %}
                 <p>No homework done...</p>
             {% endfor %}
-            <button id="delete-done-btn" class="btn">Delete all done homeworks</button>
         </div>
     </div>
+    {% if user.is_superuser %}
+        <button id="delete-done-btn" class="btn">Delete all done homeworks</button>
+    {% endif %}
     <script src="{% static 'js/kanban_drag.js' %}"></script>
     <script src="{% static 'js/kanban_delete.js' %}"></script>
 {% endblock %}

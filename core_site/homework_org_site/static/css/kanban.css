@@ -33,3 +33,7 @@
     margin-top: auto;
     align-self: center;
 }
+
+.delete-done-btn {
+    width: 100%;
+}
