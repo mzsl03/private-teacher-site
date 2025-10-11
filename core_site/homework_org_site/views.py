@@ -2,6 +2,8 @@ import calendar
 import json
 from collections import defaultdict
 from django.utils import timezone
+from django.core.cache import cache
+from datetime import timedelta
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -17,11 +19,19 @@ from homework_org_site.forms.lesson_add_form import LessonAddForm
 from homework_org_site.forms.student_add_form import StudentForm
 from homework_org_site.forms.student_update_form import StudentUpdateForm
 from homework_org_site.models import Student, Lesson, Homework
+from homework_org_site.supportfiles.news_getter import news_getter
 
 
 @login_required(login_url='/')
 def index(request):
-    return render(request,"index.html")
+    last_update = cache.get("news_last_update")
+    news = cache.get("news")
+    if not last_update or timezone.now() - last_update > timedelta(days=1):
+        news = news_getter()
+        cache.set("news_last_update", timezone.now(), 86400)
+        cache.set("news", news, 86400)
+    news_data = zip(news[0], news[1], news[2])
+    return render(request,"index.html", {'news': news_data})
 
 
 def login(request):
