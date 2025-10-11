@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
 {% load static %}
 
@@ -46,6 +46,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <a class="cancel" href="{% url 'student_list' %}">
+                <button class="btn">Cancel</button>
+            </a>
         </div>
     </div>
 {% endblock %}

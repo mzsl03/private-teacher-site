@@ -13,7 +13,7 @@
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
     padding: 2rem 2.5rem;
-    width: 100%;
+    width: 650px;
     max-width: 650px;
     overflow-y: auto;
     animation: fadeIn 0.4s ease;
@@ -76,4 +76,10 @@ form {
 
 .edit-homework-container::-webkit-scrollbar-thumb:hover {
     background-color: rgba(76, 126, 220, 0.5);
+}
+
+form + .cancel {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
 }
