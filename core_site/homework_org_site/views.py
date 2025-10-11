@@ -238,7 +238,7 @@ def edit_student(request, pk):
 @login_required(login_url='/')
 def edit_homework(request, pk):
     homework = get_object_or_404(Homework, pk=pk)
-
+    user = request.user
     if request.method == "POST":
         form = HomeworkUpdateForm(request.POST, instance=homework)
         if form.is_valid():
@@ -247,4 +247,4 @@ def edit_homework(request, pk):
     else:
         form = HomeworkUpdateForm(instance=homework)
 
-    return render(request, "edit_homework.html", {"form": form, "homework": homework})
+    return render(request, "edit_homework.html", {"form": form, "homework": homework, "user": user})
