@@ -87,6 +87,7 @@ header {
 .home-item a {
     font-weight: 700;
     color: var(--brand);
+    margin-left: 5px;
 }
 
 .logout-item form {
