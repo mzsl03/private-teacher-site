@@ -67,6 +67,10 @@
             <a href="{% url 'add_lesson' %}">
                 <button class="btn">Add lesson</button>
             </a>
+            <form method="post" action="{% url 'delete_old_lessons' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Delete all passed lessons</button>
+            </form>
         {% endif %}
     </div>
 {% endblock %}
