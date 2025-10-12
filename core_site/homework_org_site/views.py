@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from homework_org_site.forms.homework_add_form import HomeworkForm
@@ -32,7 +33,6 @@ def index(request):
         cache.set("news", news, 86400)
     news_data = zip(news[0], news[1], news[2])
     return render(request,"index.html", {'news': news_data})
-
 
 def login(request):
     if request.method == 'POST':
@@ -183,6 +183,7 @@ def add_homework(request):
         form = HomeworkForm()
     return render(request, "add_homework.html", {'form': form})
 
+@login_required(login_url='/')
 @csrf_exempt
 def update_status(request):
     if request.method == "POST":
@@ -258,3 +259,11 @@ def edit_homework(request, pk):
         form = HomeworkUpdateForm(instance=homework)
 
     return render(request, "edit_homework.html", {"form": form, "homework": homework, "user": user})
+
+@login_required(login_url='/')
+def delete_old_lessons(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    count, _ = Lesson.objects.filter(date__lte=timezone.now()).delete()
+    messages.success(request, f"{count} lessons deleted")
+    return redirect('calendar_month_today')
