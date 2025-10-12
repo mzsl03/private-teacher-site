@@ -133,3 +133,10 @@
     text-decoration: none;
     color: #fff;
 }
+
+table + a,
+a + form {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+}
