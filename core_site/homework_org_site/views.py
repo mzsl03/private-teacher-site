@@ -17,6 +17,7 @@ from django.shortcuts import render, redirect
 from homework_org_site.forms.homework_add_form import HomeworkForm
 from homework_org_site.forms.homework_update_form import HomeworkUpdateForm
 from homework_org_site.forms.lesson_add_form import LessonAddForm
+from homework_org_site.forms.lesson_update_form import LessonUpdateForm
 from homework_org_site.forms.student_add_form import StudentForm
 from homework_org_site.forms.student_update_form import StudentUpdateForm
 from homework_org_site.models import Student, Lesson, Homework
@@ -267,3 +268,18 @@ def delete_old_lessons(request):
     count, _ = Lesson.objects.filter(date__lte=timezone.now()).delete()
     messages.success(request, f"{count} lessons deleted")
     return redirect('calendar_month_today')
+
+
+@login_required(login_url='/')
+def edit_lesson(request, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+    user = request.user
+    if request.method == "POST":
+        form = LessonUpdateForm(request.POST, instance=lesson)
+        if form.is_valid():
+            form.save()
+            return redirect("calendar_month_today")
+    else:
+        form = LessonUpdateForm(instance=lesson)
+
+    return render(request, "edit_lesson.html", {"form": form, "lesson": lesson, "user": user})
