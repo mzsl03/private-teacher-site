@@ -35,17 +35,19 @@
                             id="{% if d.is_other %} cal-other{% endif %}{% if d.is_today %} cal-today-cell{% endif %}">
                             <div class="cal-date">{{ d.date.day }}</div>
                             {% for l in d.lessons %}
-                                <div class="cal-event">
-                                    <span class="cal-event-title">{{ l.subject.name }}</span>
-                                    <span class="cal-event-sub">
+                                {% if user.is_superuser %}<a href="{% url 'edit_lesson' l.id %}">{% endif %}
+                                    <div class="cal-event">
+                                        <span class="cal-event-title">{{ l.subject.name }}</span>
+                                        <span class="cal-event-sub">
                                         {% if request.user.teacher %}
                                             {{ l.student.user.get_full_name|default:l.student.user.username }}
                                         {% else %}
                                             {{ l.teacher.user.get_full_name|default:l.teacher.user.username }}
                                         {% endif %}
-                                        {{ l.duration }} minutes
+                                            {{ l.duration }} minutes
                                     </span>
-                                </div>
+                                    </div>
+                                {% if user.is_superuser %}</a>{% endif %}
                             {% empty %}
                             {% endfor %}
                             {% for h in d.homeworks %}

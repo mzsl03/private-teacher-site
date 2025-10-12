@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/edit_lesson.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="edit-lesson-div">
+        <div class="edit-lesson-container">
+            <form method="POST">
+                <h3 class="edit-lesson-title">Edit {{ lesson.topic }}</h3>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="topic">Topic</label>
+                    {{ form.topic }}
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    {{ form.date }}
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    {{ form.duration }}
+                </div>
+                <a href="{% url 'calendar_month_today' %}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </a>
+            </form>
+            <a class="cancel" href="{% url 'calendar_month_today' %}">
+                <button class="btn">Cancel</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
