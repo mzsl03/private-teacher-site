@@ -10,7 +10,7 @@
     <div class="calendar">
         <div class="cal-header">
             <a class="cal-nav" href="{% url 'calendar_month' prev_year prev_month %}">«</a>
-            <h3>{{ month }}. {{ year }}</h3>
+            <h3>{{ year }}. {{ month }}.</h3>
             <a class="cal-nav" href="{% url 'calendar_month' next_year next_month %}">»</a>
             <a class="cal-today" href="{% url 'calendar_month_today' %}">Today</a>
         </div>
