@@ -69,7 +69,7 @@
             </a>
             <form method="post" action="{% url 'delete_old_lessons' %}">
                 {% csrf_token %}
-                <button type="submit" class="btn">Delete all passed lessons</button>
+                <button type="submit" class="btn">Delete all past lessons</button>
             </form>
         {% endif %}
     </div>
